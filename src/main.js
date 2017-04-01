@@ -1,3 +1,5 @@
+global.document = undefined;
+global.window = {};
 import Hammer from './hammer';
 import assign from './utils/assign';
 import {

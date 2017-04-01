@@ -3100,6 +3100,8 @@ function inherit(child, base, properties) {
   }
 }
 
+global.document = undefined;
+global.window = {};
 // this prevents errors when Hammer is loaded in the presence of an AMD
 //  style loader but by script tag, not by the loader.
 
