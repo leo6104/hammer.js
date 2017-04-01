@@ -1,5 +1,5 @@
 const VENDOR_PREFIXES = ['', 'webkit', 'Moz', 'MS', 'ms', 'o'];
-const TEST_ELEMENT = document.createElement('div');
+const TEST_ELEMENT = () => document.createElement('div');
 
 const TYPE_FUNCTION = 'function';
 

@@ -27,14 +27,6 @@ const IE10_POINTER_TYPE_ENUM = {
   5: INPUT_TYPE_KINECT // see https://twitter.com/jacobrossi/status/480596438489890816
 };
 
-let POINTER_ELEMENT_EVENTS = 'pointerdown';
-let POINTER_WINDOW_EVENTS = 'pointermove pointerup pointercancel';
-
-// IE10 has prefixed support, and case-sensitive
-if (window.MSPointerEvent && !window.PointerEvent) {
-  POINTER_ELEMENT_EVENTS = 'MSPointerDown';
-  POINTER_WINDOW_EVENTS = 'MSPointerMove MSPointerUp MSPointerCancel';
-}
 
 /**
  * @private
@@ -45,6 +37,16 @@ if (window.MSPointerEvent && !window.PointerEvent) {
 export default class PointerEventInput extends Input {
   constructor() {
     super(...arguments);
+
+    let POINTER_ELEMENT_EVENTS = 'pointerdown';
+    let POINTER_WINDOW_EVENTS = 'pointermove pointerup pointercancel';
+
+// IE10 has prefixed support, and case-sensitive
+    if (window.MSPointerEvent && !window.PointerEvent) {
+      POINTER_ELEMENT_EVENTS = 'MSPointerDown';
+      POINTER_WINDOW_EVENTS = 'MSPointerMove MSPointerUp MSPointerCancel';
+    }
+
     this.evEl = POINTER_ELEMENT_EVENTS;
     this.evWin = POINTER_WINDOW_EVENTS;
 

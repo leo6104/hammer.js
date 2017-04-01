@@ -17,7 +17,9 @@ function ifUndefined(val1, val2) {
 }
 
 var VENDOR_PREFIXES = ['', 'webkit', 'Moz', 'MS', 'ms', 'o'];
-var TEST_ELEMENT = document.createElement('div');
+var TEST_ELEMENT = function TEST_ELEMENT() {
+    return document.createElement('div');
+};
 
 var TYPE_FUNCTION = 'function';
 
@@ -65,7 +67,7 @@ function getTouchActionProps() {
   return touchMap;
 }
 
-var PREFIXED_TOUCH_ACTION = prefixed(TEST_ELEMENT.style, 'touchAction');
+var PREFIXED_TOUCH_ACTION = prefixed(TEST_ELEMENT().style, 'touchAction');
 var NATIVE_TOUCH_ACTION = PREFIXED_TOUCH_ACTION !== undefined;
 
 // magical touchAction value
@@ -1988,15 +1990,6 @@ var IE10_POINTER_TYPE_ENUM = {
   5: INPUT_TYPE_KINECT // see https://twitter.com/jacobrossi/status/480596438489890816
 };
 
-var POINTER_ELEMENT_EVENTS = 'pointerdown';
-var POINTER_WINDOW_EVENTS = 'pointermove pointerup pointercancel';
-
-// IE10 has prefixed support, and case-sensitive
-if (window.MSPointerEvent && !window.PointerEvent) {
-  POINTER_ELEMENT_EVENTS = 'MSPointerDown';
-  POINTER_WINDOW_EVENTS = 'MSPointerMove MSPointerUp MSPointerCancel';
-}
-
 /**
  * @private
  * Pointer events input
@@ -2011,6 +2004,15 @@ var PointerEventInput = function (_Input) {
     classCallCheck(this, PointerEventInput);
 
     var _this = possibleConstructorReturn(this, (PointerEventInput.__proto__ || Object.getPrototypeOf(PointerEventInput)).apply(this, arguments));
+
+    var POINTER_ELEMENT_EVENTS = 'pointerdown';
+    var POINTER_WINDOW_EVENTS = 'pointermove pointerup pointercancel';
+
+    // IE10 has prefixed support, and case-sensitive
+    if (window.MSPointerEvent && !window.PointerEvent) {
+      POINTER_ELEMENT_EVENTS = 'MSPointerDown';
+      POINTER_WINDOW_EVENTS = 'MSPointerMove MSPointerUp MSPointerCancel';
+    }
 
     _this.evEl = POINTER_ELEMENT_EVENTS;
     _this.evWin = POINTER_WINDOW_EVENTS;
