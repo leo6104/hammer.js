@@ -81,9 +81,13 @@ var TOUCH_ACTION_MAP = getTouchActionProps();
 
 var MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android/i;
 
-var SUPPORT_TOUCH = 'ontouchstart' in window;
-var SUPPORT_POINTER_EVENTS = prefixed(window, 'PointerEvent') !== undefined;
-var SUPPORT_ONLY_TOUCH = SUPPORT_TOUCH && MOBILE_REGEX.test(navigator.userAgent);
+var SUPPORT_TOUCH = function SUPPORT_TOUCH() {
+    return 'ontouchstart' in window;
+};
+var SUPPORT_POINTER_EVENTS = function SUPPORT_POINTER_EVENTS() {
+    return prefixed(window, 'PointerEvent') !== undefined;
+};
+var SUPPORT_ONLY_TOUCH = SUPPORT_TOUCH() && MOBILE_REGEX.test(navigator.userAgent);
 
 var INPUT_TYPE_TOUCH = 'touch';
 var INPUT_TYPE_PEN = 'pen';
@@ -2432,11 +2436,11 @@ function createInputInstance(manager) {
 
   if (inputClass) {
     Type = inputClass;
-  } else if (SUPPORT_POINTER_EVENTS) {
+  } else if (SUPPORT_POINTER_EVENTS()) {
     Type = PointerEventInput;
   } else if (SUPPORT_ONLY_TOUCH) {
     Type = TouchInput;
-  } else if (!SUPPORT_TOUCH) {
+  } else if (!SUPPORT_TOUCH()) {
     Type = MouseInput;
   } else {
     Type = TouchMouseInput;

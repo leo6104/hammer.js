@@ -2,9 +2,9 @@ import prefixed from '../utils/prefixed';
 
 const MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android/i;
 
-const SUPPORT_TOUCH = ('ontouchstart' in window);
-const SUPPORT_POINTER_EVENTS = prefixed(window, 'PointerEvent') !== undefined;
-const SUPPORT_ONLY_TOUCH = SUPPORT_TOUCH && MOBILE_REGEX.test(navigator.userAgent);
+const SUPPORT_TOUCH = () => ('ontouchstart' in window);
+const SUPPORT_POINTER_EVENTS = () => prefixed(window, 'PointerEvent') !== undefined;
+const SUPPORT_ONLY_TOUCH = SUPPORT_TOUCH() && MOBILE_REGEX.test(navigator.userAgent);
 
 const INPUT_TYPE_TOUCH = 'touch';
 const INPUT_TYPE_PEN = 'pen';
